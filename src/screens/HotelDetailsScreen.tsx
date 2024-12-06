@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, StyleSheet, ScrollView} from 'react-native';
 import ValidatedImage from '../components/ValidatedImage';
 import colors from '../styles/colors';
+import {useHeader} from '../contexts/HotelContext';
 
 const HotelDetailsScreen = ({route}) => {
   const {hotel} = route.params;
+  const {setHeaderConfig} = useHeader();
+
+  useEffect(() => {
+    setHeaderConfig({
+      title: hotel.name || 'Hotel Details',
+      showBackButton: true,
+    });
+  }, [hotel, setHeaderConfig]);
 
   return (
     <ScrollView style={styles.container}>

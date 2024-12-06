@@ -2,21 +2,41 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HotelListScreen from '../screens/HotelListScreen';
 import HotelDetailsScreen from '../screens/HotelDetailsScreen';
+import Header from '../components/Header';
+import {useHeader} from '../contexts/HotelContext';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
+  const {headerConfig} = useHeader();
+
   return (
-    <Stack.Navigator initialRouteName="HotelList">
+    <Stack.Navigator>
       <Stack.Screen
         name="HotelList"
         component={HotelListScreen}
-        options={{title: 'Hotels'}}
+        options={{
+          header: () => (
+            <Header
+              title={headerConfig.title}
+              showBackButton={headerConfig.showBackButton}
+              onFilterPress={headerConfig.onFilterPress}
+              selectedFilter={headerConfig.selectedFilter}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="HotelDetails"
         component={HotelDetailsScreen}
-        options={{title: 'Hotel Details'}}
+        options={{
+          header: () => (
+            <Header
+              title={headerConfig.title}
+              showBackButton={headerConfig.showBackButton}
+            />
+          ),
+        }}
       />
     </Stack.Navigator>
   );
