@@ -1,37 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {Text, StyleSheet, ScrollView, Image} from 'react-native';
-import {validateImageUrl} from '../utils/utils';
+import React from 'react';
+import {Text, StyleSheet, ScrollView} from 'react-native';
+import ValidatedImage from '../components/ValidatedImage';
+import colors from '../styles/colors';
 
 const HotelDetailsScreen = ({route}) => {
   const {hotel} = route.params;
-  const [validImages, setValidImages] = useState([]);
-
-  useEffect(() => {
-    const checkImages = async () => {
-      const validatedImages = await Promise.all(
-        hotel.gallery.map(async url => {
-          const isValid = await validateImageUrl(url);
-          return isValid
-            ? url
-            : 'https://via.placeholder.com/200?text=No+Image';
-        }),
-      );
-      setValidImages(validatedImages);
-    };
-
-    checkImages();
-  }, [hotel.gallery]);
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.hotelName}>{hotel.name}</Text>
 
-      {validImages.length > 0 && (
+      {hotel.gallery && hotel.gallery.length > 0 && (
         <ScrollView horizontal style={styles.gallery}>
-          {validImages.map((imageUrl, index) => (
-            <Image
+          {hotel.gallery.map((imageUrl, index) => (
+            <ValidatedImage
               key={index}
-              source={{uri: imageUrl}}
+              uri={imageUrl}
               style={styles.galleryImage}
             />
           ))}
@@ -51,13 +35,6 @@ const HotelDetailsScreen = ({route}) => {
       <Text style={styles.detailText}>
         ⭐ Users score: {hotel.userRating}/10
       </Text>
-
-      <Text style={styles.detailText}>
-        🕒 Check-in: from {hotel.checkIn.from} to {hotel.checkIn.to}
-      </Text>
-      <Text style={styles.detailText}>
-        🕒 Check-out: from {hotel.checkOut.from} to {hotel.checkOut.to}
-      </Text>
     </ScrollView>
   );
 };
@@ -66,12 +43,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   hotelName: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: colors.header,
   },
   gallery: {
     flexDirection: 'row',
@@ -86,6 +64,7 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 16,
     marginVertical: 4,
+    color: colors.text,
   },
 });
 
