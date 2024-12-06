@@ -1,16 +1,34 @@
-import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {validateImageUrl} from '../utils/utils';
 
 const HotelDetailsScreen = ({route}) => {
   const {hotel} = route.params;
+  const [validImages, setValidImages] = useState([]);
+
+  useEffect(() => {
+    const checkImages = async () => {
+      const validatedImages = await Promise.all(
+        hotel.gallery.map(async url => {
+          const isValid = await validateImageUrl(url);
+          return isValid
+            ? url
+            : 'https://via.placeholder.com/200?text=No+Image';
+        }),
+      );
+      setValidImages(validatedImages);
+    };
+
+    checkImages();
+  }, [hotel.gallery]);
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.hotelName}>{hotel.name}</Text>
 
-      {hotel.gallery && hotel.gallery.length > 0 && (
+      {validImages.length > 0 && (
         <ScrollView horizontal style={styles.gallery}>
-          {hotel.gallery.map((imageUrl, index) => (
+          {validImages.map((imageUrl, index) => (
             <Image
               key={index}
               source={{uri: imageUrl}}
