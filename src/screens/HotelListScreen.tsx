@@ -5,19 +5,24 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Button,
   TouchableOpacity,
 } from 'react-native';
 import {fetchHotels} from '../services/api';
+import FilterModal from '../components/FilterModal';
 
 const HotelListScreen = ({navigation}) => {
   const [hotels, setHotels] = useState([]);
+  const [filteredHotels, setFilteredHotels] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterVisible, setFilterVisible] = useState(false);
 
   useEffect(() => {
     const loadHotels = async () => {
       try {
         const data = await fetchHotels();
         setHotels(data);
+        setFilteredHotels(data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -27,6 +32,15 @@ const HotelListScreen = ({navigation}) => {
 
     loadHotels();
   }, []);
+
+  const applyFilter = filter => {
+    if (filter === 'stars') {
+      setFilteredHotels([...hotels].sort((a, b) => b.stars - a.stars));
+    } else if (filter === 'price') {
+      setFilteredHotels([...hotels].sort((a, b) => a.price - b.price));
+    }
+    setFilterVisible(false);
+  };
 
   if (loading) {
     return (
@@ -38,27 +52,42 @@ const HotelListScreen = ({navigation}) => {
   }
 
   return (
-    <FlatList
-      data={hotels}
-      keyExtractor={item => item.name}
-      renderItem={({item}) => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('HotelDetails', {hotel: item})}>
-          <View style={styles.hotelCard}>
-            <Text style={styles.hotelName}>{item.name}</Text>
-            <Text>{item.city}</Text>
-            <Text>{item.stars} stars</Text>
-            <Text>
-              {item.price.amount} {item.price.currency}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      )}
-    />
+    <View style={styles.container}>
+      <Button title="Filtrar" onPress={() => setFilterVisible(true)} />
+
+      <FlatList
+        data={filteredHotels}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('HotelDetails', {hotel: item})}>
+            <View style={styles.hotelCard}>
+              <Text style={styles.hotelName}>{item.name}</Text>
+              <Text>{item.location.city}</Text>
+              <Text>{item.stars} stars</Text>
+              <Text>
+                {item.price} {item.currency}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+
+      {/* Modal de filtres */}
+      <FilterModal
+        visible={filterVisible}
+        onClose={() => setFilterVisible(false)}
+        onApply={applyFilter}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   loader: {
     flex: 1,
     justifyContent: 'center',
