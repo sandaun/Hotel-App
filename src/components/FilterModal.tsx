@@ -1,8 +1,19 @@
 import React, {useState} from 'react';
 import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import FilterButton from './FilterButton';
 import colors from '../styles/colors';
 
-const FilterModal = ({visible, onClose, onApply}) => {
+type FilterModalProps = {
+  visible: boolean;
+  onClose: () => void;
+  onApply: (filter: string) => void;
+};
+
+const FilterModal: React.FC<FilterModalProps> = ({
+  visible,
+  onClose,
+  onApply,
+}) => {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   return (
@@ -11,48 +22,21 @@ const FilterModal = ({visible, onClose, onApply}) => {
         <View style={styles.modalContent}>
           <Text style={styles.title}>Choose a filter</Text>
 
-          <TouchableOpacity
-            style={[
-              styles.filterOption,
-              selectedFilter === 'stars' && styles.activeOption,
-            ]}
-            onPress={() => setSelectedFilter('stars')}>
-            <Text
-              style={[
-                styles.filterText,
-                selectedFilter === 'stars' && styles.activeText,
-              ]}>
-              🌟 Stars
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.filterOption,
-              selectedFilter === 'price' && styles.activeOption,
-            ]}
-            onPress={() => setSelectedFilter('price')}>
-            <Text
-              style={[
-                styles.filterText,
-                selectedFilter === 'price' && styles.activeText,
-              ]}>
-              💰 Price
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.filterOption,
-              selectedFilter === null && styles.activeOption,
-            ]}
-            onPress={() => setSelectedFilter(null)}>
-            <Text
-              style={[
-                styles.filterText,
-                selectedFilter === null && styles.activeText,
-              ]}>
-              🚫 No filter
-            </Text>
-          </TouchableOpacity>
+          <FilterButton
+            label="🌟 Stars"
+            isSelected={selectedFilter === 'stars'}
+            onPress={() => setSelectedFilter('stars')}
+          />
+          <FilterButton
+            label="💰 Price"
+            isSelected={selectedFilter === 'price'}
+            onPress={() => setSelectedFilter('price')}
+          />
+          <FilterButton
+            label="🚫 No filter"
+            isSelected={selectedFilter === ''}
+            onPress={() => setSelectedFilter('')}
+          />
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
@@ -89,25 +73,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
     color: colors.header,
-  },
-  filterOption: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginVertical: 4,
-    backgroundColor: colors.cardBackground,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  activeOption: {
-    backgroundColor: colors.primary,
-  },
-  filterText: {
-    fontSize: 16,
-    color: colors.text,
-  },
-  activeText: {
-    color: colors.background,
-    fontWeight: 'bold',
   },
   buttonContainer: {
     flexDirection: 'row',

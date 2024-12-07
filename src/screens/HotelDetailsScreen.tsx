@@ -3,8 +3,15 @@ import {Text, StyleSheet, ScrollView} from 'react-native';
 import ValidatedImage from '../components/ValidatedImage';
 import colors from '../styles/colors';
 import {useHeader} from '../contexts/HotelContext';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../navigation/AppNavigator';
 
-const HotelDetailsScreen = ({route}) => {
+type HotelDetailsScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'HotelDetails'
+>;
+
+const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
   const {hotel} = route.params;
   const {setHeaderConfig} = useHeader();
 

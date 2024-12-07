@@ -12,10 +12,18 @@ import colors from '../styles/colors';
 import HotelCard from '../components/HotelCard';
 import {useHeader} from '../contexts/HotelContext';
 import {useFocusEffect} from '@react-navigation/native';
+import {RootStackParamList} from '../navigation/AppNavigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Hotel} from '../types/types';
 
-const HotelListScreen = ({navigation}) => {
-  const [hotels, setHotels] = useState([]);
-  const [filteredHotels, setFilteredHotels] = useState([]);
+type HotelListScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'HotelList'
+>;
+
+const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
+  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('');
@@ -49,10 +57,12 @@ const HotelListScreen = ({navigation}) => {
     loadHotels();
   }, []);
 
-  const applyFilter = filter => {
+  const applyFilter = (filter: string) => {
     setSelectedFilter(filter);
 
-    if (filter === 'stars') {
+    if (!filter) {
+      setFilteredHotels(hotels);
+    } else if (filter === 'stars') {
       setFilteredHotels([...hotels].sort((a, b) => b.stars - a.stars));
     } else if (filter === 'price') {
       setFilteredHotels([...hotels].sort((a, b) => a.price - b.price));

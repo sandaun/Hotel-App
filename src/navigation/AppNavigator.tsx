@@ -4,8 +4,14 @@ import HotelListScreen from '../screens/HotelListScreen';
 import HotelDetailsScreen from '../screens/HotelDetailsScreen';
 import Header from '../components/Header';
 import {useHeader} from '../contexts/HotelContext';
+import {Hotel} from '../types/types';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  HotelList: undefined;
+  HotelDetails: {hotel: Hotel};
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   const {headerConfig} = useHeader();

@@ -1,4 +1,4 @@
-export const validateImageUrl = async url => {
+export const validateImageUrl = async (url: string) => {
   try {
     const response = await fetch(url, {method: 'HEAD'});
     return response.ok;
