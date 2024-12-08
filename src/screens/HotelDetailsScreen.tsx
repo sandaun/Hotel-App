@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, StyleSheet, ScrollView} from 'react-native';
+import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import ValidatedImage from '../components/ValidatedImage';
 import colors from '../styles/colors';
 import {useHeader} from '../contexts/HotelContext';
@@ -24,8 +24,6 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.hotelName}>{hotel.name}</Text>
-
       {hotel.gallery && hotel.gallery.length > 0 && (
         <ScrollView horizontal style={styles.gallery}>
           {hotel.gallery.map((imageUrl, index) => (
@@ -38,19 +36,20 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
         </ScrollView>
       )}
 
-      <Text style={styles.detailText}>🌟 {hotel.stars} stars</Text>
-      <Text style={styles.detailText}>
-        📍 {hotel.location.address}, {hotel.location.city}
-      </Text>
-      <Text style={styles.detailText}>
-        📞 {hotel.contact.phoneNumber} | ✉️ {hotel.contact.email}
-      </Text>
-      <Text style={styles.detailText}>
-        💰 {hotel.price} {hotel.currency} per night
-      </Text>
-      <Text style={styles.detailText}>
-        ⭐ Users score: {hotel.userRating}/10
-      </Text>
+      <View style={styles.detailsContainer}>
+        <Text style={styles.detailText}>🌟 {hotel.stars} stars</Text>
+        <Text style={styles.detailText}>
+          📍 {hotel.location.address}, {hotel.location.city}
+        </Text>
+        <Text style={styles.detailText}>📞 {hotel.contact.phoneNumber}</Text>
+        <Text style={styles.detailText}>✉️ {hotel.contact.email}</Text>
+        <Text style={styles.detailText}>
+          💰 {hotel.price} {hotel.currency} per night
+        </Text>
+        <Text style={styles.detailText}>
+          ⭐ Users score: {hotel.userRating}/10
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -61,11 +60,12 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: colors.background,
   },
-  hotelName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: colors.header,
+  detailsContainer: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    borderColor: colors.border,
+    backgroundColor: colors.cardBackground,
   },
   gallery: {
     flexDirection: 'row',

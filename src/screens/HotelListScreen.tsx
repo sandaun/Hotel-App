@@ -85,6 +85,7 @@ const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
       <FlatList
         data={filteredHotels}
         keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
         renderItem={({item}) => (
           <HotelCard
             hotel={item}
@@ -106,6 +107,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  listContainer: {
+    paddingBottom: 24,
   },
   loader: {
     flex: 1,
