@@ -74,7 +74,11 @@ const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
   if (loading) {
     return (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" color={colors.primary} />
+        <ActivityIndicator
+          testID="loading-indicator"
+          size="large"
+          color={colors.primary}
+        />
         <Text>Loading hotels...</Text>
       </View>
     );

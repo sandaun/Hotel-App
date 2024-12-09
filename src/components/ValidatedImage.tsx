@@ -9,14 +9,16 @@ const ValidatedImage = ({uri, style}: {uri: string; style: any}) => {
     const checkImage = async () => {
       const isValid = await validateImageUrl(uri);
       if (!isValid) {
-        setValidUri('https://via.placeholder.com/200?text=No+Image'); // URL estàndard
+        setValidUri('https://via.placeholder.com/200?text=No+Image');
       }
     };
 
     checkImage();
   }, [uri]);
 
-  return <Image source={{uri: validUri}} style={style} />;
+  return (
+    <Image testID="validated-image" source={{uri: validUri}} style={style} />
+  );
 };
 
 export default ValidatedImage;
