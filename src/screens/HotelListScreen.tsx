@@ -73,19 +73,15 @@ const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
 
   if (loading) {
     return (
-      <View style={styles.loader}>
-        <ActivityIndicator
-          testID="loading-indicator"
-          size="large"
-          color={colors.primary}
-        />
+      <View style={styles.loader} testID="loading-indicator">
+        <ActivityIndicator size="large" color={colors.primary} />
         <Text>Loading hotels...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="hotel-list-screen">
       <FlatList
         data={filteredHotels}
         keyExtractor={item => item.id.toString()}

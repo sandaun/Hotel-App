@@ -23,7 +23,7 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
   }, [hotel, setHeaderConfig]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} testID="hotel-details-screen">
       {hotel.gallery && hotel.gallery.length > 0 && (
         <ScrollView horizontal style={styles.gallery}>
           {hotel.gallery.map((imageUrl, index) => (
