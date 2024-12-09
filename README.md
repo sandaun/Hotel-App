@@ -1,79 +1,123 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# HotelApp
 
-# Getting Started
+**HotelApp** is a mobile application developed with **React Native** that allows users to view a list of hotels, apply filters (by stars, price, and rating), and explore detailed information about a specific hotel, including an image gallery and its location on a map.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+---
 
-## Step 1: Start the Metro Server
+## Main features
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- **Hotel List:** View a list of hotels with basic information such as name, price, stars, and rating.
+- **Hotel Details:** Explore detailed information about a hotel, including an image gallery and a map with the location.
+- **Filtering:** Filter hotels by price, stars, or rating.
+- **Image Management:** Validate images before displaying them and replace invalid ones with a `placeholder`.
+- **Integrated Map:** Display the hotel's location using **react-native-maps**.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+---
 
-```bash
-# using npm
-npm start
+## Installation
 
-# OR using Yarn
-yarn start
+Follow these steps to run the project locally:
+
+### Prerequisites
+
+- Yarn or npm
+- Expo CLI (optional for faster development)
+- An Android/iOS emulator or a physical device
+
+### Passos
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/username/HotelApp.git
+   cd HotelApp
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+   or
+
+   ```bash
+   yarn
+   ```
+
+3. **Run the Application**
+
+   ```bash
+   npm start
+   ```
+
+   or
+
+   ```bash
+   yarn start
+   ```
+
+- **For iOS**:
+  ```bash
+  npm run ios
+  ```
+  or
+  ```bash
+  yarn ios
+  ```
+- **For Android**:
+  ```bash
+  npm run android
+  ```
+  or
+  ```bash
+  yarn android
+  ```
+
+---
+
+## Project structure
+
+```
+src/
+├── components/         # Reusable components (ValidatedImage, FilterButton, etc.)
+├── contexts/           # Context API for global state management (HeaderContext)
+├── navigation/         # Navigation configuration (AppNavigator.tsx)
+├── screens/            # Main screens (HotelListScreen, HotelDetailsScreen)
+├── services/           # API services (fetchHotels)
+├── styles/             # Styling files (colors.ts)
+├── types/              # Type and enum definitions
+├── utils/              # Helper functions (validateImageUrl)
+└── tests/              # Unit and integration tests
 ```
 
-## Step 2: Start your Application
+## Technologies Used
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+- **React Native**: Main framework for mobile development.
+- **TypeScript**: For robust, statically-typed code.
+- **React Navigation**: For managing navigation within the application.
+- **React Native Maps**: To display hotel locations on a map.
+- **Jest** and **React Testing Library**: For unit and integration testing.
 
-### For Android
+## Testing
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
+To run the tests, use the following command:
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npm test
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+o
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```bash
+yarn test
+```
 
-## Step 3: Modifying your App
+---
 
-Now that you have successfully run the app, let's modify it.
+## TODO and Future Improvements
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **Enable multi-filter selection**: Allow users to select more than one filter with priority for better results management.
+- **Implement hotel name search**: To quickly and efficiently find specific hotels.
+- **Add favorite hotels functionality**: Enable saving and easy access to preferred hotels.
+- **Optimize performance for large hotel lists**: Reduce loading times and improve user experience.
