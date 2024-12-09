@@ -39,39 +39,21 @@ Follow these steps to run the project locally:
    npm install
    ```
 
-   or
-
-   ```bash
-   yarn
-   ```
-
 3. **Run the Application**
 
    ```bash
    npm start
    ```
 
-   or
-
-   ```bash
-   yarn start
-   ```
-
 - **For iOS**:
+
   ```bash
   npm run ios
   ```
-  or
-  ```bash
-  yarn ios
-  ```
+
 - **For Android**:
   ```bash
   npm run android
-  ```
-  or
-  ```bash
-  yarn android
   ```
 
 ---
@@ -105,12 +87,6 @@ To run the tests, use the following command:
 
 ```bash
 npm test
-```
-
-o
-
-```bash
-yarn test
 ```
 
 ---
