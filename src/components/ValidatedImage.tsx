@@ -1,14 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {Image} from 'react-native';
+import {Image, ImageStyle} from 'react-native';
 import {validateImageUrl} from '../utils/utils';
 
-const ValidatedImage = ({uri, style}: {uri: string; style: any}) => {
-  const [validUri, setValidUri] = useState(uri);
+type ValidatedImageProps = {
+  uri: string;
+  style: ImageStyle;
+  onLoadEnd?: () => void;
+};
+
+const ValidatedImage: React.FC<ValidatedImageProps> = ({
+  uri,
+  style,
+  onLoadEnd,
+}) => {
+  const [validUri, setValidUri] = useState<string | null>(null);
 
   useEffect(() => {
     const checkImage = async () => {
       const isValid = await validateImageUrl(uri);
-      if (!isValid) {
+      if (isValid) {
+        setValidUri(uri);
+      } else {
         setValidUri('https://via.placeholder.com/200?text=No+Image');
       }
     };
@@ -16,9 +28,14 @@ const ValidatedImage = ({uri, style}: {uri: string; style: any}) => {
     checkImage();
   }, [uri]);
 
-  return (
-    <Image testID="validated-image" source={{uri: validUri}} style={style} />
-  );
+  return validUri ? (
+    <Image
+      testID="validated-image"
+      source={{uri: validUri}}
+      style={style}
+      onLoadEnd={onLoadEnd}
+    />
+  ) : null;
 };
 
 export default ValidatedImage;

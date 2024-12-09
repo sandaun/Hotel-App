@@ -1,5 +1,11 @@
-import React, {useEffect} from 'react';
-import {Text, StyleSheet, ScrollView, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Text,
+  StyleSheet,
+  ScrollView,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import ValidatedImage from '../components/ValidatedImage';
 import MapView, {Marker} from 'react-native-maps';
 import colors from '../styles/colors';
@@ -16,6 +22,9 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
   const {hotel} = route.params;
   const {setHeaderConfig} = useHeader();
 
+  const [imagesLoading, setImagesLoading] = useState(true);
+  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
+
   useEffect(() => {
     setHeaderConfig({
       title: hotel.name || 'Hotel Details',
@@ -23,19 +32,37 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
     });
   }, [hotel, setHeaderConfig]);
 
+  useEffect(() => {
+    if (loadedImagesCount === hotel.gallery?.length) {
+      setImagesLoading(false);
+    }
+  }, [loadedImagesCount, hotel.gallery?.length]);
+
+  const handleImageLoad = () => {
+    setLoadedImagesCount(prevCount => prevCount + 1);
+  };
+
   return (
     <ScrollView style={styles.container} testID="hotel-details-screen">
-      {hotel.gallery && hotel.gallery.length > 0 && (
-        <ScrollView horizontal style={styles.gallery}>
-          {hotel.gallery.map((imageUrl, index) => (
-            <ValidatedImage
-              key={index}
-              uri={imageUrl}
-              style={styles.galleryImage}
-            />
-          ))}
-        </ScrollView>
+      {imagesLoading && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={styles.loaderText}>Loading gallery...</Text>
+        </View>
       )}
+
+      <ScrollView
+        horizontal
+        style={[styles.gallery, imagesLoading && styles.galleryHidden]}>
+        {hotel.gallery?.map((imageUrl, index) => (
+          <ValidatedImage
+            key={index}
+            uri={imageUrl}
+            style={styles.galleryImage}
+            onLoadEnd={handleImageLoad}
+          />
+        ))}
+      </ScrollView>
 
       <View style={styles.detailsContainer}>
         <Text style={styles.detailText}>🌟 {hotel.stars} stars</Text>
@@ -82,6 +109,30 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: colors.background,
   },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  loaderText: {
+    marginTop: 8,
+    fontSize: 16,
+    color: colors.text,
+  },
+  gallery: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  galleryHidden: {
+    opacity: 0,
+  },
+  galleryImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 8,
+    marginRight: 8,
+  },
   detailsContainer: {
     borderWidth: 1,
     borderRadius: 8,
@@ -89,16 +140,6 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.cardBackground,
     marginBottom: 16,
-  },
-  gallery: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  galleryImage: {
-    width: 200,
-    height: 150,
-    borderRadius: 8,
-    marginRight: 8,
   },
   detailText: {
     fontSize: 16,

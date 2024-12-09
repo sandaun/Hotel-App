@@ -8,19 +8,17 @@ jest.mock('../../utils/utils', () => ({
 }));
 
 describe('ValidatedImage', () => {
-  const mockValidateImageUrl = validateImageUrl as jest.Mock;
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders the image with a valid URL', async () => {
-    mockValidateImageUrl.mockResolvedValue(true);
+  it('renders the valid image URL', async () => {
+    (validateImageUrl as jest.Mock).mockResolvedValue(true);
 
     const {getByTestId} = render(
       <ValidatedImage
         uri="https://example.com/valid-image.jpg"
-        style={{width: 100, height: 100}}
+        style={{width: 150, height: 150}}
       />,
     );
 
@@ -32,13 +30,13 @@ describe('ValidatedImage', () => {
     });
   });
 
-  it('renders the placeholder with an invalid URL', async () => {
-    mockValidateImageUrl.mockResolvedValue(false);
+  it('renders the placeholder image for invalid URLs', async () => {
+    (validateImageUrl as jest.Mock).mockResolvedValue(false);
 
     const {getByTestId} = render(
       <ValidatedImage
         uri="https://example.com/invalid-image.jpg"
-        style={{width: 100, height: 100}}
+        style={{width: 150, height: 150}}
       />,
     );
 
@@ -51,7 +49,7 @@ describe('ValidatedImage', () => {
   });
 
   it('applies the passed styles', async () => {
-    mockValidateImageUrl.mockResolvedValue(true);
+    (validateImageUrl as jest.Mock).mockResolvedValue(true);
 
     const {getByTestId} = render(
       <ValidatedImage
@@ -60,7 +58,9 @@ describe('ValidatedImage', () => {
       />,
     );
 
-    const image = getByTestId('validated-image');
-    expect(image.props.style).toEqual({width: 150, height: 150});
+    await waitFor(() => {
+      const image = getByTestId('validated-image');
+      expect(image.props.style).toEqual({width: 150, height: 150});
+    });
   });
 });
