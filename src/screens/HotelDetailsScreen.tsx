@@ -47,7 +47,7 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
           💰 {hotel.price} {hotel.currency} per night
         </Text>
         <Text style={styles.detailText}>
-          ⭐ Users score: {hotel.userRating}/10
+          🤩 Users score: {hotel.userRating}/10
         </Text>
       </View>
     </ScrollView>

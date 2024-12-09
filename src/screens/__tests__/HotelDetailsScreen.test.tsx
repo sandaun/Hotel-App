@@ -82,7 +82,7 @@ describe('HotelDetailsScreen', () => {
       expect(getByText('📞 123-456-7890')).toBeTruthy();
       expect(getByText('✉️ info@paradise.com')).toBeTruthy();
       expect(getByText('💰 300 EUR per night')).toBeTruthy();
-      expect(getByText(/⭐ Users score: 9(\.0)?\/10/)).toBeTruthy();
+      expect(getByText(/🤩 Users score: 9(\.0)?\/10/)).toBeTruthy();
     });
   });
 

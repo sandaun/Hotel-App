@@ -6,3 +6,10 @@ export const validateImageUrl = async (url: string) => {
     return false;
   }
 };
+
+export const formatHotelName = (name: string) =>
+  name
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');

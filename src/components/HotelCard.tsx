@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import ValidatedImage from './ValidatedImage';
 import colors from '../styles/colors';
 import {Hotel} from '../types/types';
+import {formatHotelName} from '../utils/utils';
 
 type HotelCardProps = {
   hotel: Hotel;
@@ -16,10 +17,10 @@ const HotelCard: React.FC<HotelCardProps> = ({hotel, onPress}) => {
         <ValidatedImage uri={hotel.gallery?.[0]} style={styles.image} />
 
         <View style={styles.infoContainer}>
-          <Text style={styles.hotelName}>{hotel.name}</Text>
+          <Text style={styles.hotelName}>{formatHotelName(hotel.name)}</Text>
           <Text style={styles.hotelCity}>{hotel.location.city}</Text>
           <Text style={styles.hotelDetails}>
-            🌟 {hotel.stars} stars | 💰 {hotel.price} {hotel.currency}
+            {`🌟 ${hotel.stars} stars | 💰 ${hotel.price} ${hotel.currency} | 🤩 ${hotel.userRating}`}
           </Text>
         </View>
       </View>
