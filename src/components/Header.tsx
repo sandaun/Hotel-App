@@ -9,6 +9,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import colors from '../styles/colors';
 import {formatHotelName} from '../utils/utils';
+import {FILTER_ICONS} from '../utils/constants';
+import {FilterTypes} from '../types/types';
 
 const Header = ({
   title,
@@ -43,12 +45,7 @@ const Header = ({
         {!showBackButton && onFilterPress ? (
           <TouchableOpacity onPress={onFilterPress} style={styles.filterButton}>
             <Text style={styles.filterButtonText}>
-              Filter:{' '}
-              {selectedFilter === 'stars'
-                ? '🌟'
-                : selectedFilter === 'price'
-                ? '💰'
-                : '🚫'}
+              Filter: {FILTER_ICONS[selectedFilter as FilterTypes]}
             </Text>
           </TouchableOpacity>
         ) : (

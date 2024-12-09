@@ -25,3 +25,10 @@ export type Hotel = {
   stars: number;
   userRating: number;
 };
+
+export enum FilterTypes {
+  Stars = 'stars',
+  Price = 'price',
+  Score = 'score',
+  None = 'noFilter',
+}

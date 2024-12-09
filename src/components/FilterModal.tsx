@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
 import FilterButton from './FilterButton';
 import colors from '../styles/colors';
+import {FilterTypes} from '../types/types';
 
 type FilterModalProps = {
   visible: boolean;
   onClose: () => void;
-  onApply: (filter: string) => void;
+  onApply: (filter: FilterTypes) => void;
 };
 
 const FilterModal: React.FC<FilterModalProps> = ({
@@ -14,7 +15,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
   onClose,
   onApply,
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState<FilterTypes>(
+    FilterTypes.None,
+  );
 
   return (
     <Modal visible={visible} transparent animationType="fade">
@@ -24,23 +27,23 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
           <FilterButton
             label="🌟 Stars"
-            isSelected={selectedFilter === 'stars'}
-            onPress={() => setSelectedFilter('stars')}
+            isSelected={selectedFilter === FilterTypes.Stars}
+            onPress={() => setSelectedFilter(FilterTypes.Stars)}
           />
           <FilterButton
             label="💰 Price"
-            isSelected={selectedFilter === 'price'}
-            onPress={() => setSelectedFilter('price')}
+            isSelected={selectedFilter === FilterTypes.Price}
+            onPress={() => setSelectedFilter(FilterTypes.Price)}
           />
           <FilterButton
             label="🤩 Users score"
-            isSelected={selectedFilter === 'score'}
-            onPress={() => setSelectedFilter('score')}
+            isSelected={selectedFilter === FilterTypes.Score}
+            onPress={() => setSelectedFilter(FilterTypes.Score)}
           />
           <FilterButton
             label="🚫 No filter"
-            isSelected={selectedFilter === ''}
-            onPress={() => setSelectedFilter('')}
+            isSelected={selectedFilter === FilterTypes.None}
+            onPress={() => setSelectedFilter(FilterTypes.None)}
           />
 
           <View style={styles.buttonContainer}>
