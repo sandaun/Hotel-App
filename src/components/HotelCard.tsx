@@ -2,8 +2,14 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import ValidatedImage from './ValidatedImage';
 import colors from '../styles/colors';
+import {Hotel} from '../types/types';
 
-const HotelCard = ({hotel, onPress}) => {
+type HotelCardProps = {
+  hotel: Hotel;
+  onPress: () => void;
+};
+
+const HotelCard: React.FC<HotelCardProps> = ({hotel, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
