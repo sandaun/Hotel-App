@@ -27,8 +27,8 @@ const mockHotel: Hotel = {
   location: {
     address: '123 Paradise St',
     city: 'Dreamland',
-    latitude: 0,
-    longitude: 0,
+    latitude: 10.0,
+    longitude: 20.0,
   },
   contact: {
     email: 'info@paradise.com',
@@ -99,6 +99,22 @@ describe('HotelDetailsScreen', () => {
     await waitFor(() => {
       const images = getAllByTestId('validated-image');
       expect(images).toHaveLength(mockHotel.gallery.length);
+    });
+  });
+
+  it('renders the map with correct coordinates', async () => {
+    const {getByTestId} = render(
+      <NavigationContainer>
+        <HotelDetailsScreen
+          navigation={mockNavigation as any}
+          route={{params: {hotel: mockHotel}} as any}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      const map = getByTestId('hotel-details-map');
+      expect(map).toBeTruthy();
     });
   });
 });

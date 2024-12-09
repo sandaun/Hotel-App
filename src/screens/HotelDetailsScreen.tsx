@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Text, StyleSheet, ScrollView, View} from 'react-native';
 import ValidatedImage from '../components/ValidatedImage';
+import MapView, {Marker} from 'react-native-maps';
 import colors from '../styles/colors';
 import {useHeader} from '../contexts/HotelContext';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -50,6 +51,27 @@ const HotelDetailsScreen: React.FC<HotelDetailsScreenProps> = ({route}) => {
           🤩 Users score: {hotel.userRating}/10
         </Text>
       </View>
+
+      {hotel.location.latitude && hotel.location.longitude && (
+        <MapView
+          testID="hotel-details-map"
+          style={styles.map}
+          initialRegion={{
+            latitude: hotel.location.latitude,
+            longitude: hotel.location.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}>
+          <Marker
+            coordinate={{
+              latitude: hotel.location.latitude,
+              longitude: hotel.location.longitude,
+            }}
+            title={hotel.name}
+            description={`${hotel.location.address}, ${hotel.location.city}`}
+          />
+        </MapView>
+      )}
     </ScrollView>
   );
 };
@@ -66,6 +88,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderColor: colors.border,
     backgroundColor: colors.cardBackground,
+    marginBottom: 16,
   },
   gallery: {
     flexDirection: 'row',
@@ -81,6 +104,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 4,
     color: colors.text,
+  },
+  map: {
+    height: 300,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
 });
 

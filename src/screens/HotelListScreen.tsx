@@ -66,6 +66,10 @@ const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
       setFilteredHotels([...hotels].sort((a, b) => b.stars - a.stars));
     } else if (filter === 'price') {
       setFilteredHotels([...hotels].sort((a, b) => a.price - b.price));
+    } else if (filter === 'score') {
+      setFilteredHotels(
+        [...hotels].sort((a, b) => b.userRating - a.userRating),
+      );
     }
 
     setFilterVisible(false);

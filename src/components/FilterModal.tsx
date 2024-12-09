@@ -33,6 +33,11 @@ const FilterModal: React.FC<FilterModalProps> = ({
             onPress={() => setSelectedFilter('price')}
           />
           <FilterButton
+            label="🤩 Users score"
+            isSelected={selectedFilter === 'score'}
+            onPress={() => setSelectedFilter('score')}
+          />
+          <FilterButton
             label="🚫 No filter"
             isSelected={selectedFilter === ''}
             onPress={() => setSelectedFilter('')}

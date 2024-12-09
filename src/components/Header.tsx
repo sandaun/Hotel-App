@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import colors from '../styles/colors';
+import {formatHotelName} from '../utils/utils';
 
 const Header = ({
   title,
@@ -36,7 +37,7 @@ const Header = ({
         )}
 
         <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
-          {title}
+          {formatHotelName(title)}
         </Text>
 
         {!showBackButton && onFilterPress ? (
