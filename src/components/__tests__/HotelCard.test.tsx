@@ -31,7 +31,6 @@ describe('HotelCard', () => {
       <HotelCard hotel={mockHotel} onPress={() => {}} />,
     );
 
-    // Espera que es carreguin les actualitzacions de ValidatedImage
     await waitFor(() => {
       expect(getByTestId('validated-image')).toBeTruthy();
     });

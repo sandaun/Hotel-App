@@ -3,7 +3,6 @@ import {render, fireEvent} from '@testing-library/react-native';
 import {Button, Text} from 'react-native';
 import {HeaderProvider, useHeader} from '../HotelContext';
 
-// Mock Component to consume context
 const MockConsumer: React.FC = () => {
   const {headerConfig, setHeaderConfig} = useHeader();
 
