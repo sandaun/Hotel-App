@@ -26,7 +26,9 @@ const HotelListScreen: React.FC<HotelListScreenProps> = ({navigation}) => {
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterVisible, setFilterVisible] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState<FilterTypes>(
+    FilterTypes.None,
+  );
 
   const {setHeaderConfig} = useHeader();
 
